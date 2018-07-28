@@ -6,6 +6,7 @@ import { DomicilioService } from "../_services/domicilio.service";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { Domicilio } from '../domicilio';
+import { GeolocationService } from '../_services/geolocation.service';
 
 @Component({
   selector: 'app-user-form',
@@ -26,6 +27,7 @@ export class UserFormComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private userService: UserService,
+    private geolocationService: GeolocationService,
     private domicilioService: DomicilioService,
     private router: Router,
     private route: ActivatedRoute,
@@ -101,6 +103,19 @@ export class UserFormComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  search(address:string){
+    if(address!=undefined){
+      this.geolocationService.getCoords(address).subscribe(
+        (response)=>{
+          console.log(response);
+          this.domicilio.latitud = response.lat;
+          this.domicilio.longitud = response.lng;
+        },
+        (error)=>console.error(error)
+      );
+    }
   }
 
 }

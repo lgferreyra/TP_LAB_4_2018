@@ -14,6 +14,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { ProfileGuard } from './_guards/profile.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
+import { GeolocationService } from "./_services/geolocation.service";
 import { ReCaptchaModule } from "angular2-recaptcha";
 
 import { AppComponent } from './app.component';
@@ -27,6 +28,8 @@ import { ViajeFormComponent } from './viaje-form/viaje-form.component';
 import { DomicilioService } from './_services/domicilio.service';
 import { VehiculoFormComponent } from './vehiculo-form/vehiculo-form.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { AgmCoreModule } from '@agm/core'            // @agm/core
+import { AgmDirectionModule } from 'agm-direction'   // agm-direction
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -58,14 +61,19 @@ export function tokenGetter() {
         whitelistedDomains: ['localhost:3001'],
         blacklistedRoutes: ['localhost:3001/auth/']
       }
-    })
+    }),
+    AgmCoreModule.forRoot({ // @agm/core
+      apiKey: 'AIzaSyA-FowwXJQObnQv6el2beO-WT9GF3KtW4U',
+    }),
+    AgmDirectionModule      // agm-direction
   ],
   providers: [
     AuthGuard,
     ProfileGuard,
     AuthenticationService,
     UserService,
-    DomicilioService
+    DomicilioService,
+    GeolocationService
     // providers used to create fake backend
     // fakeBackendProvider,
     // MockBackend,

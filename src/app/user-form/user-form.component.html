@@ -9,7 +9,9 @@
             </select>
         </div>
         <div class="form-group col-md-4" *ngIf="modifing">
-            <label for="perfil">Tipo de usuario : <b>{{usuario.perfil}}</b></label>
+            <label for="perfil">Tipo de usuario :
+                <b>{{usuario.perfil}}</b>
+            </label>
         </div>
     </div>
     <div class="form-row">
@@ -27,7 +29,8 @@
     <div class="form-row">
         <div class="form-group col-md-6" [ngClass]="{ 'has-error': f.submitted && !documento.valid }">
             <label for="documento">Documento</label>
-            <input type="text" class="form-control" name="documento" [(ngModel)]="usuario.documento" #documento="ngModel" maxlength="20" required />
+            <input type="text" class="form-control" name="documento" [(ngModel)]="usuario.documento" #documento="ngModel" maxlength="20"
+                required />
             <div *ngIf="f.submitted && !documento.valid" class="help-block">El documento es requerido</div>
         </div>
         <div class="form-group col-md-6" [ngClass]="{ 'has-error': f.submitted && !fecha.valid }">
@@ -39,8 +42,8 @@
     <div class="form-row">
         <div class="form-group col-md-8">
             <label for="direccion">Dirección</label>
-            <input type="text" class="form-control" name="direccion" [(ngModel)]="domicilio.direccion" #direccion="ngModel" maxlength="50"
-                required>
+            <input type="text" class="form-control" name="direccion" [(ngModel)]="domicilio.direccion" (blur)="search(domicilio.direccion)"
+                #direccion="ngModel" maxlength="50" required>
             <div *ngIf="f.submitted && !direccion.valid" class="help-block">La dirección es requerida</div>
         </div>
         <div class="form-group col-md-2">
@@ -56,13 +59,23 @@
         </div>
         <div class="form-group col-md-2">
             <label for="latitud">Latitud</label>
-            <input type="text" class="form-control" name="latitud" [(ngModel)]="domicilio.latitud" #latitud="ngModel">
+            <input type="text" class="form-control" name="latitud" [(ngModel)]="domicilio.latitud" #latitud="ngModel" disabled>
         </div>
         <div class="form-group col-md-2">
             <label for="longitud">Longitud</label>
-            <input type="text" class="form-control" name="longitud" [(ngModel)]="domicilio.longitud" #longitud="ngModel">
+            <input type="text" class="form-control" name="longitud" [(ngModel)]="domicilio.longitud" #longitud="ngModel" disabled>
         </div>
     </div>
+
+    <agm-map [latitude]="domicilio.latitud" [longitude]="domicilio.longitud" [usePanning]="true" [zoom]="16" [zoomControl]="false">
+
+        <agm-marker [latitude]="domicilio.latitud" [longitude]="domicilio.longitud">
+            <agm-info-window>
+                <strong>{{domicilio.direccion}}</strong>
+            </agm-info-window>
+        </agm-marker>
+    </agm-map>
+
     <div class="form-row">
         <div class="form-group col-md-6" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
             <label for="email">Correo electrónico</label>

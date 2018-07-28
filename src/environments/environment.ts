@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   apiUrl: "http://lgferreyra.esy.es/lab4/",
-  authUrl: "http://lgferreyra.esy.es/lab4/PHP/server/jwt/php/auth.php"
+  authUrl: "http://lgferreyra.esy.es/lab4/PHP/server/jwt/php/auth.php",
+  geoUrl:"http://maps.googleapis.com/maps/api/geocode/json?"
 };
